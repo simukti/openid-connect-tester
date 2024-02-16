@@ -1,0 +1,45 @@
+{{define "page_content"}}
+    <section>
+        <div class="grid">
+            <div>
+                <article>
+                    <header>User Info API Response</header>
+                    <div class="grid">
+                        <div>
+                            <pre><code>{{ .userInfoJSON }}</code></pre>
+                        </div>
+                    </div>
+                    <footer>
+                        <a role="button" class="outline" href="/">Reload</a>
+                        <a role="button" href="{{ .logoutPath }}">Clear Session</a>
+                        <a role="button" href="{{ .logoutPath }}?reset_config=true">Clear Session &amp; Reset Config</a>
+                    </footer>
+                </article>
+            </div>
+        </div>
+        <div class="grid">
+            <div>
+                <article>
+                    <header>Token</header>
+                    <pre><code>{{ .token }}</code></pre>
+                </article>
+            </div>
+        </div>
+        <div class="grid">
+            <div>
+                <article>
+                    <header>Logs</header>
+                    <pre><code>{{ .logs }}</code></pre>
+                </article>
+            </div>
+        </div>
+        <div class="grid">
+            <div>
+                <article>
+                    <header>Provider Info</header>
+                    <pre><code>{{ .providerInfo }}</code></pre>
+                </article>
+            </div>
+        </div>
+    </section>
+{{end}}

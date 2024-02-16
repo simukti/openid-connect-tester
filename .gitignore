@@ -1,6 +1,7 @@
 build/
 dist/
 data/
+vendor/
 .vscode/
 .idea/
 .scannerwork/
