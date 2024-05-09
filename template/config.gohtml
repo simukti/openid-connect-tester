@@ -1,0 +1,65 @@
+{{define "page_content"}}
+    <section>
+        <div class="grid">
+            <div>
+                <article>
+                    <header>OpenID Provider</header>
+                    <form action="{{ .configPath }}" method="POST">
+                        <fieldset>
+                            <label> Issuer URL*
+                                <input type="text" name="issuer_url" required value="{{ .cfg.IssuerURL }}"/>
+                                {{if .showError}}
+                                    <small style="color: red;">{{ .errorMessage }}</small>
+                                {{end}}
+                            </label>
+                            <label> Redirect URL*
+                                <input type="text" name="redirect_url" required value="{{ .cfg.RedirectURL }}"/>
+                            </label>
+                            <label> Client ID*
+                                <input type="text" name="client_id" required value="{{ .cfg.ClientID }}"/>
+                            </label>
+                            <label> Client Secret
+                                <input type="text" name="client_secret" value="{{ .cfg.ClientSecret }}"
+                                       placeholder="optional"
+                                       aria-placeholder="optional"/>
+                            </label>
+                            <button type="submit">Save</button>
+                        </fieldset>
+                    </form>
+                </article>
+            </div>
+            <div>
+                <article>
+                    <header>Notes</header>
+                    <table class="striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Provider</th>
+                            <th scope="col">Note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google</a>
+                            </td>
+                            <td>
+                                Requires ClientID and ClientSecret
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Keycloak
+                            </td>
+                            <td>
+                                Requires OpenID type client and ClientID only for StandardFlow
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </div>
+
+    </section>
+{{end}}
