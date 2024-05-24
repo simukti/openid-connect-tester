@@ -1,0 +1,51 @@
+# simulate Keycloak OIDC login with LDAP auth.
+services:
+  oidc-tester:
+    image: simukti/openid-connect-tester:latest
+    container_name: oidc-tester
+    platform: linux/amd64
+    restart: on-failure
+    depends_on:
+      keycloak-server:
+        condition: service_started
+      ldap-server:
+        condition: service_started
+    ports:
+      - "3000:3000/tcp"
+  keycloak-server:
+    image: quay.io/keycloak/keycloak:23.0.6
+    container_name: keycloak-server
+    platform: linux/amd64
+    restart: on-failure
+    depends_on:
+      ldap-server:
+        condition: service_started
+    ports:
+      - "8080:8080/tcp"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+    command: start-dev --import-realm
+  ldap-server:
+    image: bitnami/openldap:2.6.7
+    container_name: ldap-server
+    platform: linux/amd64
+    restart: on-failure
+    ports:
+      - "1389:1389/tcp"
+      - "1636:1636/tcp"
+    expose:
+      - 1389
+      - 1636
+    environment:
+      - LDAP_ROOT=dc=non-existent-domain,dc=co,dc=id
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=admin
+      - LDAP_GROUP=readers
+      - LDAP_USER_DC=users
+      - LDAP_USERS=user1,user2,user3
+      - LDAP_PASSWORDS=password1,password2,password3
+volumes:
+  keycloak-server-data:
