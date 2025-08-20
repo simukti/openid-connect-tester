@@ -1,5 +1,5 @@
 # build stage
-FROM golang:1.24.2-bookworm AS builder
+FROM golang:1.25.0-bookworm AS builder
 WORKDIR /go/src/app
 COPY . .
 ENV CGO_ENABLED=0
